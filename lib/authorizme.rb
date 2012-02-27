@@ -1,7 +1,8 @@
-require "authorizme/version"
 # Requires
-require "active_support/dependencies"
+require "authorizme/version"
 require "rails"
+require "active_support/dependencies"
+
 
 module Authorizme
   # Our host application root path
@@ -15,5 +16,6 @@ module Authorizme
 end
 
 # Require our engine
+require "authorizme/routes"
 require "authorizme/engine"
 
