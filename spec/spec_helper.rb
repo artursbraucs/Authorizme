@@ -1,2 +1,2 @@
 require 'authorizme'
-require 'supermodel'
+# require 'supermodel'
