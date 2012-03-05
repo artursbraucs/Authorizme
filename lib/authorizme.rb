@@ -16,6 +16,5 @@ module Authorizme
 end
 
 # Require our engine
-require "authorizme/routes"
 require "authorizme/engine"
 

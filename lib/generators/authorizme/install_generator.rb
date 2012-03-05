@@ -23,10 +23,6 @@ module Authorizme
         template 'models/user.rb', 'app/models/user.rb'
       end
 
-      def setup_routes
-        route "Authorizme.routes(self)"
-      end
-
       def create_migrations
         Dir["#{self.class.source_root}/migrations/*.rb"].sort.each do |filepath|
           name = File.basename(filepath)
