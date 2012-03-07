@@ -1,5 +1,5 @@
 module Authorizme
-  class LoginController < AuthorizmeController
+  class LogoutController < AuthorizmeController
   
     def index
       logout

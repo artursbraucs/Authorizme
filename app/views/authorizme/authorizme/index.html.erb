@@ -1,0 +1,23 @@
+<h2>Authorizme plugin for authorization</h2>
+<div>Authorizme version <%= Authorizme::VERSION %></div>
+
+<h3>Authorize with your credentials:</h3>
+<%= form_tag "/#{Authorizme::namespace}/sessions" do %>
+  <p>
+    <%= label_tag :email %><br />
+    <%= text_field_tag :email, params[:email] %>
+  </p>
+  <p>
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
+  </p>
+  <p class="button"><%= submit_tag "Log in" %></p>
+<% end %>
+
+<h3>or use one of those providers:</h3>
+<%= link_to "Draugiem.lv", "/#{Authorizme::namespace}/login/draugiem" %>
+<%= link_to "Twitter.com", "/#{Authorizme::namespace}/login/twitter" %>
+<%= link_to "Facebook.com", "/#{Authorizme::namespace}/login/facebook" %>
+
+<h3>or you can signup:</h3>
+<%= link_to "Signup", "/#{Authorizme::namespace}/signup" %>

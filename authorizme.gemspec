@@ -5,9 +5,9 @@ require "authorizme/version"
 Gem::Specification.new do |s|
   s.name        = "authorizme"
   s.version     = Authorizme::VERSION
-  s.authors     = ["Arturs Braucs"]
+  s.authors     = ["Arturs Braucs", "Creative Mobile"]
   s.email       = ["arturs@creo.mobi"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/CreativeMobile/Authorizme"
   s.summary     = %q{Simple authorization gem for basic and Oauth: facebook.com, twitter.com and draugiem.lv}
   s.description = %q{Authorization that includes basic authorization and 3 social authorization with Latvia social network draugiem.lv, facebook.com and twitter.com.}
 
@@ -24,4 +24,8 @@ Gem::Specification.new do |s|
   
   s.add_dependency "activesupport", "~> 3.2.1"
   s.add_dependency "rails", "~> 3.2.1"
+  s.add_dependency "json"
+  s.add_dependency "fb_graph"
+  s.add_dependency "twitter_oauth"
+  s.add_dependency "twitter"
 end

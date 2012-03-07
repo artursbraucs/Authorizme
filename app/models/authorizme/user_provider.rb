@@ -28,7 +28,7 @@ module Authorizme
 
         if userParams['users']
           userJson = userParams['users'][userParams['uid']]
-          user_provider = UserProvider.find_or_create_by_social_id_and_name(userParams['uid'], "draugiem")
+          user_provider = UserProvider.find_or_create_by_social_id_and_provider_type(userParams['uid'], "draugiem")
 
           user = UserProvider.set_user_data(user_provider, userJson['name'], userJson['surname'], userJson['img'], user)
 
@@ -48,7 +48,7 @@ module Authorizme
       end
 
       def create_or_get_by_facebook fb_user, access_token, user = nil
-        user_provider = UserProvider.find_or_create_by_social_id_and_name(fb_user.identifier.to_i, "facebook")
+        user_provider = UserProvider.find_or_create_by_social_id_and_provider_type(fb_user.identifier.to_i, "facebook")
         user = UserProvider.set_user_data(user_provider, fb_user.first_name, fb_user.last_name, fb_user.picture + '?type=large', user)
 
         user_provider.token = access_token

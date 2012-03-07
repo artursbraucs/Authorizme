@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
-  get '/login' => 'authorizme/login#index', :as => 'authorizme_index'
-  get '/login/facebook' => 'authorizme/login#facebook', :as => 'authorizme_login_facebook'
-  get '/login/draugiem' => 'authorizme/login#draugiem', :as => 'authorizme_login_draugiem'
-  get '/login/twitter' => 'authorizme/login#twitter', :as => 'authorizme_login_twitter'
-  post '/login' => 'authorizme/login#create', :as => 'authorizme_login'
-  get '/logout' => 'authorizme/logout#index', :as => 'authorizme_logout'
+  # All authorizme routes will be under custom namespace
+  namespace Authorizme::namespace do
+  	resources :sessions
+    resources :users
+    
+    get '/' => 'authorizme#index', :as => 'main'
+    get '/signup' => 'users#new', :as => 'signup' 
+    get '/login/facebook' => 'login#facebook', :as => 'login_facebook'
+    
+    get '/login/draugiem' => 'login/draugiem#auth', :as => 'login_draugiem'
+
+    get '/login/twitter' => 'login#twitter', :as => 'login_twitter'
+    post '/login' => 'login#create', :as => 'login'
+    get '/logout' => 'logout#index', :as => 'logout'
+  end
 end

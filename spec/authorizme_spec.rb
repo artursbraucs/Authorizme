@@ -2,5 +2,16 @@
 require 'spec_helper'
 
 describe Authorizme do
-  
+  describe "#configure" do
+    it "passes Authorizme to the given block" do
+      Authorizme.setup do |config|
+        config.namespace = 'foo'
+      end
+      Authorizme.namespace.should == 'foo'
+    end
+
+    it "get default from configs" do
+      Authorizme.remote.should == false
+    end
+  end  
 end
