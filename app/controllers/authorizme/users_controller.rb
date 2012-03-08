@@ -1,5 +1,6 @@
 module Authorizme
   class UsersController < AuthorizmeController
+    
     def new
       @user = User.new
     end

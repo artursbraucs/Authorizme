@@ -3,24 +3,12 @@ module Authorizme
     #Relations
     belongs_to :user
     belongs_to :origin_user, :class_name => "User"
+
     #Validations
-    
     # => Attributes
     validates :social_id, :presence => true
-    validates :name, :presence => true
     validates :token, :presence => true
 
-    #Filters
-    after_save :set_origin_provider_to_user
-
-    #Methods
-    def set_origin_provider_to_user
-      unless self.origin_user.origin_provider.present?
-        self.origin_user.origin_provider_id = self[:id]
-        self.origin_user.save
-      end
-    end
-    
     class << self
 
       def create_or_get_by_draugiem json, user = nil
@@ -63,26 +51,59 @@ module Authorizme
         return user
       end
 
-      private
+      # authorize
+      # Finds or creates user provider and creates or updates user with social data
+      # => Attributes
+      # *provider_type* provider name, e.g. facebook. Default in gem draugiem, twitter, facebook
+      # *social_id* social network user identity number
+      # *attributes* attributes from social nettwork. Can be set: first_name, last_name, image_url 
+      # *token* token
+      # *secret* secret
+      #
+      def authorize provider_type, social_id, attributes = {}, token = nil, secret = nil
+        user_provider = UserProvider.find_or_initialize_by_social_id_and_provider_type(social_id.to_s, provider_type)
+        user_provider.token = token
+        user_provider.secret = secret if secret
+        user_provider.save!
+        user_provider.create_or_update_user attributes
+        self.user
+      end
 
-        def set_user_data user_provider, first_name, last_name, image_url, user
-          if user != nil
-            user_provider.user = user
-          else
-            if user_provider.user
-              user = user_provider.user
-              user.image_url = image_url
-              user.save
-            else
-              user = User.new
-              user.first_name = first_name
-              user.last_name = last_name if last_name
-              user.image_url = image_url
-              user.save!
-            end
-          end
-          user
-        end
     end
+
+    def create_or_update_user attributes
+      unless self.user
+        self.user = User.new
+        self.user.origin_provider = self
+        self.user.has_provider = true
+        self.user.save!
+        self.origin_user = self.user
+      end
+      self.user.has_provider = true
+      self.user.update_attributes!(attributes)
+    end
+
+    private
+
+
+
+      def self.set_user_data user_provider, first_name, last_name, image_url, user
+        if user != nil
+          user_provider.user = user
+        else
+          if user_provider.user
+            user = user_provider.user
+            user.image_url = image_url
+            user.save
+          else
+            user = User.new
+            user.first_name = first_name
+            user.last_name = last_name if last_name
+            user.image_url = image_url
+            user.save!
+          end
+        end
+        user
+      end
   end
 end

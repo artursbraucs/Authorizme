@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.string :email
       t.string :image_url
+      t.boolean :has_provider
 
       # For password
       t.string :password_digest

@@ -4,8 +4,13 @@ module Authorizme
     def create
       user = User.find_by_email(params[:email])
       if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect_to root_url, :notice => "Logged in!"
+        login user
+        if Authorizme::remote
+          status = {status: "logged_in", user: user}
+          respond_with status
+        else
+          redirect_to Authorizme::after_login_path
+        end
       else
         flash.now.alert = "Invalid email or password"
         render "new"

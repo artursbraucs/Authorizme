@@ -5,19 +5,20 @@ require 'authorizme/provider/draugiem'
 module Authorizme
   module Provider
     describe Draugiem do
+
+        options = { 
+          draugiem_app_id: Authorizme::draugiem_app_id,
+          draugiem_app_key: Authorizme::draugiem_app_key,
+          redirect_url: "http://domain.com/#{Authorizme::namespace}/login/draugiem/callback/" 
+        }
+        draugiem = Draugiem.new(options)
+
       it "initialize" do
-        draugiem = Draugiem.new
+        draugiem.should_not be_nil
       end
 
       it "should get login url" do
-        options = { 
-          draugiem_app_id: Authorizme::draugiem_app_id,
-          draugiem_app_key: Authorizme::draugiem_app_id,
-          draugiem_api_path: Authorizme::draugiem_app_id,
-          redirect_url: "www.domain.com/#{Authorizme::namespace}/login/draugiem/callback" 
-        }
-        draugiem = Draugiem.new(options)
-        draugiem.login_url.should == "http://api.draugiem.lv/authorize/?app=15008309&hash=7c99c985148b6118ed3ee9765b3070b5&redirect=www.domain.com/foo/login/draugiem/callback"
+        draugiem.login_url.should == "http://api.draugiem.lv/authorize/?app=15008309&hash=54154816b1ed5a660b6ba4e18440e248&redirect=http://domain.com/authorizme/login/draugiem/callback/"
       end
 
     end

@@ -9,17 +9,13 @@ module Authorizme
 
       def login user
       	session[:user_id] = user.id
-        if Authorizme::remote
-          respond_with {:status => "logged_in", :user => user}
-        else
-          redirect_to Authorizme::after_login_path
-        end
       end
   
       def logout
       	session[:user_id] = nil
         if Authorizme::remote
-          respond_with {:status => "logged_out"}
+          status = {status: "logged_out"}
+          respond_with status
         else
           redirect_to Authorizme::after_logout_path
         end

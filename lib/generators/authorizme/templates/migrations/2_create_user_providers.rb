@@ -16,6 +16,7 @@ class CreateUserProviders < ActiveRecord::Migration
       t.index :user_id
       t.index :origin_user_id
       t.index :social_id
+      t.index :provider_type
     end
   end
 end
