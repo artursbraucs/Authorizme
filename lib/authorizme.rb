@@ -3,11 +3,11 @@ require "rails"
 require "active_support/dependencies"
 require "active_record"
 
+require 'authorizme/acts_as_authorizme'
 require "authorizme/version"
 
 
 module Authorizme
-  autoload :AuthorizmeRecord, 'authorizme/authorizme_record'
   autoload :Provider, 'authorizme/provider'
 
   # Our host application root path

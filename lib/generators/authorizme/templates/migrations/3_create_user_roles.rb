@@ -6,7 +6,7 @@ class CreateUserRoles < ActiveRecord::Migration
       t.timestamps
     end
     
-    UserRole.create!(:name => 'member')
+    Authorizme::UserRole.create!(:name => 'member')
   end
 
   
