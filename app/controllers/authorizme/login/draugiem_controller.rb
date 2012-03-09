@@ -1,6 +1,6 @@
 module Authorizme
   module Login
-    class Authorizme::Login::DraugiemController < ApplicationController
+    class Authorizme::Login::DraugiemController < AuthorizmeController
       respond_to :html, :json, :xml
       before_filter :set_draugiem
 

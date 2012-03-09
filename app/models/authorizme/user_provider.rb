@@ -66,7 +66,7 @@ module Authorizme
         user_provider.secret = secret if secret
         user_provider.save!
         user_provider.create_or_update_user attributes
-        self.user
+        user_provider.user
       end
 
     end
@@ -78,9 +78,12 @@ module Authorizme
         self.user.has_provider = true
         self.user.save!
         self.origin_user = self.user
+        self.user
       end
       self.user.has_provider = true
-      self.user.update_attributes!(attributes)
+      self.user.attributes = attributes
+      self.user.save!
+      self.save!
     end
 
     private

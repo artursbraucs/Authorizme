@@ -1,5 +1,5 @@
 module Authorizme
-  class AuthorizmeRecord < ActiveRecord::Base
+   class AuthorizmeRecord < ActiveRecord::Base
     self.abstract_class = true
 
     # Relations
@@ -13,6 +13,7 @@ module Authorizme
         
     # Validations
     validates_presence_of :password, :on => :create, :if => :has_not_provider?
+    validates_presence_of :password_digest, :on => :create, :if => :has_not_provider?
     validates_presence_of :email, :on => :create, :if => :has_not_provider?
     validates_uniqueness_of :email, :if => :has_not_provider?
 
@@ -23,7 +24,9 @@ module Authorizme
       !self.has_provider
     end
 
+
     private
+
 
       def set_default_role
         new_role = Authorizme::UserRole.find(:first) 
