@@ -1,7 +1,6 @@
 # Authorizme
 
-Authorization that includes basic authorization and 3 social authorization with Latvia social network draugiem.lv, facebook.com and twitter.com.
-
+Simple authorization plugin for Ruby on Rails applications that by default includes basic authorization and 3 provider authorization with Latvia social network draugiem.lv, facebook.com and twitter.com.
 
 ## Installation
 
@@ -11,12 +10,26 @@ Add to your Gemfile and run the `bundle` command to install it.
 gem "authorizme"
 ```
 
-**Requires Ruby 1.9.2 or later.**
+Run authorizme install generator from your app folder
 
+```ruby
+rails g authorizme:install
+```
+
+That will install:
+* config file `authorizme.rb` in to `config/initializers`
+* `User` model with `acts_as_authorizme` method
+* migrations for authorizme
+
+Then migrate your database `rake db:migrate`
+
+**Requires Ruby 1.9.2 or later.**
 
 ## Usage
 
+### Getting started
 
+### Advanced usage
 
 ## Development
 
