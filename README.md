@@ -17,6 +17,7 @@ rails g authorizme:install
 ```
 
 That will install:
+
 * config file `authorizme.rb` in to `config/initializers`
 * `User` model with `acts_as_authorizme` method
 * migrations for authorizme
