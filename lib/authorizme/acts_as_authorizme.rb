@@ -35,6 +35,64 @@ module Authorizme
             super + ['password_digest']
           end
         end
+        
+        def method_missing(meth, *args, &block)
+          if meth.to_s =~ /^authenticate_with_(.+)$/
+            run_authenticate_with_provider($1, *args, &block)
+          else
+            super
+          end
+        end
+
+        def respond_to?(meth)
+          if meth.to_s =~ /^authenticate_with_.*$/
+            true
+          else
+            super
+          end
+        end
+        
+        protected
+
+          # authorize
+          # Finds or creates user provider and creates or updates user with social data
+          # => Attributes
+          # *provider* provider name, e.g. facebook. Default in gem draugiem, twitter, facebook
+          # From args: 
+          # *social_id* social network user identity number
+          # *attributes* attributes from social nettwork. Can be set: first_name, last_name, image_url 
+          # *token* token
+          # *secret* secret
+          #
+          def run_authenticate_with_provider provider, *args, &block          
+            social_id = args[0]
+            attributes = args[1]
+            token = args[2]
+            secret = args[3]
+
+            user_provider = Authorizme::UserProvider.find_or_initialize_by_social_id_and_provider_type(social_id.to_s, provider)
+            user_provider.token = token
+            user_provider.secret = secret if secret
+            user_provider.save!
+            self.create_or_update_by_provider user_provider, attributes
+          end
+          
+          
+          def create_or_update_by_provider provider, attributes
+            unless provider.user
+              provider.user = User.new
+              provider.user.origin_provider = provider
+              provider.user.has_provider = true
+              provider.user.save!
+              provider.origin_user = provider.user
+              provider.user
+            end
+            provider.user.has_provider = true
+            provider.user.attributes = attributes
+            provider.user.save!
+            provider.save!
+            provider.user
+          end
       end
     end
 
@@ -59,7 +117,7 @@ module Authorizme
       def has_not_provider?
         !self.has_provider
       end
-
+      
       private
 
         def set_default_role

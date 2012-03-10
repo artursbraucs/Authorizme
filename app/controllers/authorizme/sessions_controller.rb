@@ -16,6 +16,10 @@ module Authorizme
         render "new"
       end
     end
+    
+    def destroy
+      logout
+    end
 
   end
 end

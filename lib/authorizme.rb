@@ -56,6 +56,9 @@ module Authorizme
   mattr_accessor :remote
   @@remote = false
   
+  mattr_accessor :providers
+  @@providers = ["draugiem", "facebook", "twitter"]
+  
   # Yield self on setup for nice config blocks
   def self.setup
     yield self

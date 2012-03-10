@@ -1,7 +1,6 @@
 module Authorizme
   module Login
-    class Authorizme::Login::DraugiemController < AuthorizmeController
-      respond_to :html, :json, :xml
+    class DraugiemController < AuthorizmeController
       before_filter :set_draugiem
 
       def auth
@@ -9,17 +8,16 @@ module Authorizme
       end
 
       def callback
-        data = @draugiem.authorize params[:dr_auth_status], params[:dr_auth_code]
-
-        json = JSON.parse(data)
-
-        if json["users"]
+        json = @draugiem.authorize params[:dr_auth_status], params[:dr_auth_code]
+        if params[:dr_auth_status] == "ok" && json["users"]
           user_json = json["users"][json["uid"]]
           attributes = {first_name: user_json["name"], last_name: user_json["surname"], image_url: user_json["img"]}
-          user = UserProvider.authorize("draugiem", json["uid"], attributes, json["apikey"])
+          user = User.authenticate_with_draugiem(json["uid"], attributes, json["apikey"]) 
           login user
+          respond_with_status "logged_in", user: user
+        else
+          respond_with_status "error_in_loggin"
         end
-        respond_with json
       end
 
       private

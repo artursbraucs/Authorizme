@@ -6,13 +6,14 @@ Rails.application.routes.draw do
     
     get '/' => 'authorizme#index', :as => 'main'
     get '/signup' => 'users#new', :as => 'signup' 
-    get '/login/facebook' => 'login#facebook', :as => 'login_facebook'
     
-    get '/login/draugiem' => 'login/draugiem#auth', :as => 'login_draugiem'
-    get '/login/draugiem/callback' => 'login/draugiem#callback', :as => 'login_draugiem_callback'
-
-    get '/login/twitter' => 'login#twitter', :as => 'login_twitter'
-    post '/login' => 'login#create', :as => 'login'
-    get '/logout' => 'logout#index', :as => 'logout'
+    # Declare all provider routes.
+    Authorizme::providers.each do |provider|
+      get "/login/#{provider}" => "login/#{provider}#auth", :as => "#{provider}_login"
+      get "/login/#{provider}/callback" => "login/#{provider}#callback", :as => "#{provider}_callback"
+    end
+    
+    post '/login' => 'sessions#create', :as => 'login'
+    get '/logout' => 'sessions#destroy', :as => 'logout'
   end
 end

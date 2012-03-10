@@ -9,33 +9,12 @@ module Authorizme
     validates :social_id, :presence => true
     validates :token, :presence => true
 
+    # TODO: must get rid off methods in UserProvider model
     class << self
-
-      def create_or_get_by_draugiem json, user = nil
-        userParams = JSON.parse(json)
-
-        if userParams['users']
-          userJson = userParams['users'][userParams['uid']]
-          user_provider = UserProvider.find_or_create_by_social_id_and_provider_type(userParams['uid'], "draugiem")
-
-          user = UserProvider.set_user_data(user_provider, userJson['name'], userJson['surname'], userJson['img'], user)
-
-          user_provider.token = userParams['apikey']
-          user_provider.user = user
-
-          if user_provider.id == nil
-            user_provider.origin_user = user
-          end
-
-          user_provider.save
-
-          return user
-        else
-          return nil
-        end
-      end
-
+      
+      # <b>DEPRECATED:</b>
       def create_or_get_by_facebook fb_user, access_token, user = nil
+        warn "[DEPRECATION] `create_or_get_by_facebook` is deprecated."
         user_provider = UserProvider.find_or_create_by_social_id_and_provider_type(fb_user.identifier.to_i, "facebook")
         user = UserProvider.set_user_data(user_provider, fb_user.first_name, fb_user.last_name, fb_user.picture + '?type=large', user)
 
@@ -51,46 +30,11 @@ module Authorizme
         return user
       end
 
-      # authorize
-      # Finds or creates user provider and creates or updates user with social data
-      # => Attributes
-      # *provider_type* provider name, e.g. facebook. Default in gem draugiem, twitter, facebook
-      # *social_id* social network user identity number
-      # *attributes* attributes from social nettwork. Can be set: first_name, last_name, image_url 
-      # *token* token
-      # *secret* secret
-      #
-      def authorize provider_type, social_id, attributes = {}, token = nil, secret = nil
-        user_provider = UserProvider.find_or_initialize_by_social_id_and_provider_type(social_id.to_s, provider_type)
-        user_provider.token = token
-        user_provider.secret = secret if secret
-        user_provider.save!
-        user_provider.create_or_update_user attributes
-        user_provider.user
-      end
-
-    end
-
-    def create_or_update_user attributes
-      unless self.user
-        self.user = User.new
-        self.user.origin_provider = self
-        self.user.has_provider = true
-        self.user.save!
-        self.origin_user = self.user
-        self.user
-      end
-      self.user.has_provider = true
-      self.user.attributes = attributes
-      self.user.save!
-      self.save!
-    end
-
     private
-
-
-
+      
+      # <b>DEPRECATED:</b> Please use <tt>useful</tt> instead.
       def self.set_user_data user_provider, first_name, last_name, image_url, user
+        warn "[DEPRECATION] `set_user_data` is deprecated.  Please use `User.create_or_update_by_provider` instead."
         if user != nil
           user_provider.user = user
         else

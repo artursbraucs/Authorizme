@@ -26,11 +26,15 @@ module Authorizme
       end
 
       def authorize dr_auth_status, dr_auth_code
+        gem 'json'
+        require 'json'
+        
         return nil unless dr_auth_status
         if dr_auth_status == 'ok'
           params = { :action => 'authorize', 'app' => @options[:draugiem_app_key], 'code' => dr_auth_code }
           response = login_params params
-          return response
+          json = JSON.parse(response)
+          return json
         end
       end
 
