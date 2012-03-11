@@ -5,7 +5,10 @@ require "active_record"
 
 require 'authorizme/acts_as_authorizme'
 require "authorizme/version"
-
+require "oauth2"
+require "fbgraph"
+require "twitter_oauth"
+require "twitter"
 
 module Authorizme
   autoload :Provider, 'authorizme/provider'
@@ -29,20 +32,20 @@ module Authorizme
 
   # Atributes for facebook.com API
   mattr_accessor :facebook_client_id
-  @@facebook_client_id = ""
+  @@facebook_client_id = "340578915987797"
 
   mattr_accessor :facebook_client_secret
-  @@facebook_client_secret = ""
+  @@facebook_client_secret = "6cfd9cf26dfbb6f299fd7ad0bb0ca08a"
 
   mattr_accessor :facebook_perms
-  @@facebook_perms = "read_stream"
+  @@facebook_perms = "email,read_stream,offline_access"
 
   # Atributes for twitter.com API
   mattr_accessor :twitter_consumer_key
-  @@twitter_consumer_key = ""
+  @@twitter_consumer_key = "MStc9ncAw6gnwaJaRcg9ZA"
 
   mattr_accessor :twitter_consumer_secret
-  @@twitter_consumer_secret = ""
+  @@twitter_consumer_secret = "XsrFZXWAyjUyc0WY5hGE32shg6YkhKjbadbHmJmTXM"
 
   mattr_accessor :after_login_path
   @@after_login_path = ""

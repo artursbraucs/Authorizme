@@ -29,7 +29,9 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.1"
   s.add_dependency "bcrypt-ruby"
   s.add_dependency "json"
-  s.add_dependency "fb_graph"
   s.add_dependency "twitter_oauth"
   s.add_dependency "twitter"
+  s.add_dependency "oauth2"
+  s.add_dependency "fbgraph"
+  
 end

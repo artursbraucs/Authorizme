@@ -28,7 +28,7 @@ module Authorizme
             draugiem_app_key: Authorizme::draugiem_app_key,
             draugiem_api_path: Authorizme::draugiem_api_path,
             draugiem_api_authorize_path: Authorizme::draugiem_api_authorize_path,
-            redirect_url: "http://#{request.host}:#{request.port}/#{Authorizme::namespace}/login/draugiem/callback.json"         
+            redirect_url: redirect_uri("draugiem")       
           }
           @draugiem = Authorizme::Provider::Draugiem.new(options)
         end

@@ -44,13 +44,13 @@ module Authorizme
           end
         end
 
-        def respond_to?(meth)
-          if meth.to_s =~ /^authenticate_with_.*$/
-            true
-          else
-            super
-          end
-        end
+        #def respond_to?(meth)
+        #  if meth.to_s =~ /^authenticate_with_.*$/
+        #    true
+        #  else
+        #    super
+        #  end
+        #end
         
         protected
 

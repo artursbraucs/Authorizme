@@ -25,5 +25,9 @@ module Authorizme
         status = status.merge(attributes) if attributes
         respond_with status
       end
+      
+      def redirect_uri provider
+        "http://#{request.host}:#{request.port}/#{Authorizme::namespace}/login/#{provider}/callback.json"
+      end
   end
 end
