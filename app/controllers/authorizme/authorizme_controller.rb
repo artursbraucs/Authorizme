@@ -27,7 +27,11 @@ module Authorizme
       end
       
       def redirect_uri provider
-        "http://#{request.host}:#{request.port}/#{Authorizme::namespace}/login/#{provider}/callback.json"
+        if Rails.env.development?
+          redirect_url = "http://127.0.0.1:3000/authorizme/login/twitter/callback.json"
+        else
+          "http://#{request.host}/#{Authorizme::namespace}/login/#{provider}/callback"
+        end
       end
   end
 end
