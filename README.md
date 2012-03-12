@@ -24,7 +24,7 @@ That will install:
 
 Then migrate your database `rake db:migrate`
 
-**Requires Ruby 1.9.2 or later.**
+**Requires Ruby 1.9.2 or later and Rails 3.2.1 or later.**
 
 ## Usage
 
