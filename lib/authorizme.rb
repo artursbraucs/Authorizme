@@ -2,13 +2,16 @@
 require "rails"
 require "active_support/dependencies"
 require "active_record"
+require "action_controller"
 
-require 'authorizme/acts_as_authorizme'
 require "authorizme/version"
 require "oauth2"
 require "fbgraph"
 require "twitter_oauth"
 require "twitter"
+
+require 'authorizme/acts_as_authorizme'
+require 'authorizme/for_controllers'
 
 module Authorizme
   autoload :Provider, 'authorizme/provider'
@@ -48,13 +51,16 @@ module Authorizme
   @@twitter_consumer_secret = "XsrFZXWAyjUyc0WY5hGE32shg6YkhKjbadbHmJmTXM"
 
   mattr_accessor :after_login_path
-  @@after_login_path = ""
+  @@after_login_path = :root
 
   mattr_accessor :after_logout_path
-  @@after_logout_path = ""
-
+  @@after_logout_path = :root
+  
   mattr_accessor :namespace
   @@namespace = :authorizme
+  
+  mattr_accessor :not_logged_in_path
+  @@not_logged_in_path = "/#{Authorizme::namespace}/"
 
   mattr_accessor :remote
   @@remote = false

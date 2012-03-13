@@ -12,8 +12,12 @@ module Authorizme
           redirect_to Authorizme::after_login_path
         end
       else
-        flash.now.alert = "Invalid email or password"
-        render "new"
+        if Authorizme::remote
+          status = {status: "error"}
+          respond_with status
+        else
+          render "new"
+        end
       end
     end
     

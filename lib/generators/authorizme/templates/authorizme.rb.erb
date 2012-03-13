@@ -26,10 +26,19 @@ Authorizme.setup do |config|
 
   # == After login and logout path
   # 
-  # Default is set root_path
+  #   
 
   config.after_login_path = :root
   config.after_logout_path = :root
+
+  # == Not logged in path
+  # 
+  # Path to redirect after 'require_user' method checked that user is not authorized
+  # 
+  #  config.not_logged_in_path = :authorizme
+  #
+  # Default is authorizme index path
+  #
 
   # == Authorizme namespace
   #
@@ -44,5 +53,16 @@ Authorizme.setup do |config|
   #   config.remote = false
   #
   # Default it is set false
+
+  # == You can specify which providers you want to use in your application
+  #
+  # You can specify which providers you want to use in your application
+  # Authorizme gem have twitter.com, facebook.com and draugiem.lv authentification
+  # If you want implement your own provider, you must create controller in model Authorizme::Login
+  # and must implement auth and callback methods.
+  #
+  #   config.providers = ["draugiem", "facebook", "twitter"]
+  #
+  # By default uses draugiem, facebook and twitter providers
   
 end
