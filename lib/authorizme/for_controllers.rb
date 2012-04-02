@@ -16,6 +16,14 @@ module Authorizme
       @current_user ||= User.find session[:user_id] if session[:user_id]
     end
     
+    def login user
+      if current_user
+        request_synchronize user
+      else
+    	  session[:user_id] = user.id
+    	end
+    end
+    
     def require_user
       unless current_user
         if Authorizme::remote

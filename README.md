@@ -30,7 +30,15 @@ Then migrate your database `rake db:migrate`
 
 ### Getting started
 
+To authorize user with basic authorization, post email and password to `/authorizme/sessions`. (if you have another namespace, use `/{your_namespace}/sessions`)
+
+To authorize user with providers, use `/authorizme/login/{provider_name}`. Before that you MUST set your api keys and secrets to those providers in `config/initializers`
+
+To register user with basic authorization you can just save data to your user model and then call `login(user)` from your controller.
+
 ### Advanced usage
+
+You can implement your own provider. Create controller under model `Authorizme::Login` and extend `AuthorizmeController`. Then you must implement `auth` and `callback` methods, where `auth` is method which redirect user to provider and `callback` get data from provider callback data. Then you must add your provider namespace in authorizme config file in array `providers`. 
 
 ## Development
 

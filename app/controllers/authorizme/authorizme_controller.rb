@@ -6,11 +6,7 @@ module Authorizme
     end
 
     protected
-
-      def login user
-      	session[:user_id] = user.id
-      end
-  
+      
       def logout
       	session[:user_id] = nil
         if Authorizme::remote
@@ -28,10 +24,13 @@ module Authorizme
       
       def redirect_uri provider
         if Rails.env.development?
-          redirect_url = "http://127.0.0.1:3000/authorizme/login/twitter/callback.json"
+          redirect_url = "http://localhost:3000/authorizme/login/#{provider}/callback.json"
         else
           "http://#{request.host}/#{Authorizme::namespace}/login/#{provider}/callback"
         end
+      end
+      
+      def request_synchronize user
       end
   end
 end
