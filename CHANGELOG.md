@@ -1,3 +1,10 @@
+## 0.0.3
+
+### Features & Enhancements
+
+* [#1][]: Add role methods to controller ([@artursbraucs][])
+* Add providers callback popup view with jquery support.
+
 ## 0.0.2
 
 ### Features & Enhancements

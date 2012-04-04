@@ -16,6 +16,10 @@ module Authorizme
         end
       end
       
+      def render_popup_view
+        render "popup", :layout => "authorizme/layouts/popup"
+      end
+      
       def respond_with_status status_name, attributes = nil
         status = {status: status_name}
         status = status.merge(attributes) if attributes
@@ -24,13 +28,13 @@ module Authorizme
       
       def redirect_uri provider
         if Rails.env.development?
-          redirect_url = "http://localhost:3000/authorizme/login/#{provider}/callback.json"
+          "http://#{request.host}:#{request.port}/#{Authorizme::namespace}/login/#{provider}/callback"
         else
           "http://#{request.host}/#{Authorizme::namespace}/login/#{provider}/callback"
         end
       end
       
-      def request_synchronize user
+      def another_user_logged_in user
       end
   end
 end

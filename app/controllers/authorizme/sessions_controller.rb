@@ -6,8 +6,7 @@ module Authorizme
       if user && user.authenticate(params[:password])
         login user
         if Authorizme::remote
-          status = {status: "logged_in", user: user}
-          respond_with status
+          respond_with_status "logged_in", {user: user}
         else
           redirect_to Authorizme::after_login_path
         end

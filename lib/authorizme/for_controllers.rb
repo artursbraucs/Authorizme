@@ -18,23 +18,44 @@ module Authorizme
     
     def login user
       if current_user
-        request_synchronize user
+        another_user_logged_in user
       else
     	  session[:user_id] = user.id
     	end
     end
     
-    def require_user
+    def run_require_user
       unless current_user
-        if Authorizme::remote
-          status = {status: "not_logged_in"}
-          respond_with status
-        else
-          redirect_to "/#{Authorizme::namespace}/"
-        end
+        not_logged_in_status
       end
     end
     
+    def method_missing(meth, *args, &block)
+      if meth.to_s =~ /^require_(.+)$/
+        if $1 == "user"
+          run_require_user
+        else
+          run_require_role($1, *args, &block)
+        end
+      else
+        super
+      end
+    end
+    
+    def run_require_role(role, *args, &block)
+      unless current_user && current_user.role.name == role
+        not_logged_in_status
+      end
+    end
+    
+    def not_logged_in_status
+      if Authorizme::remote
+        status = {status: "not_logged_in"}
+        respond_with status
+      else
+        redirect_to "/#{Authorizme::namespace}/"
+      end
+    end
   end
 end
 

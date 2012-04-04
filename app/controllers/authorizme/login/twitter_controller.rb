@@ -12,14 +12,14 @@ module Authorizme
 
       def callback
         if params[:denied]
-          respond_with_status "error_in_logging"
+          render_popup_view
         else
           access_token = authorize_with_twitter params[:oauth_token], params[:oauth_verifier]
           twitter_user = Twitter.user
           attributes = {first_name: twitter_user.name, image_url: twitter_user.profile_image_url}
           user = User.authenticate_with_twitter(twitter_user.id, attributes, access_token.token, access_token.secret)
           login user
-          respond_with_status "logged_in", user: user
+          render_popup_view
         end
       end
 

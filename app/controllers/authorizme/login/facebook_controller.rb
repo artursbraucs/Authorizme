@@ -15,7 +15,7 @@ module Authorizme
         attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url}
         user = User.authenticate_with_facebook(user_json.id, attributes, access_token) 
         login user
-        respond_with_status "logged_in", user: user
+        render_popup_view
       end
       
       private
