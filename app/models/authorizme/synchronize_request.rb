@@ -3,9 +3,7 @@ module Authorizme
     belongs_to :user
     belongs_to :requested_user, :class_name => "User"
 
-    default_scope :joins => :requested_user
-
-    scope :status_new, where(:status => "new")
+    scope :status_new, joins(:requested_user).where(:status => "new")
 
     def as_json
       {id: self.id, status: self.status, requested_user: self.requested_user, created_at: self.created_at}

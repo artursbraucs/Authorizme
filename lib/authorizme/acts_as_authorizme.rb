@@ -130,7 +130,7 @@ module Authorizme
       
       private
       
-        def on_synchronize old_user
+        def on_synchronized old_user
         end
         
         def set_default_role
