@@ -15,6 +15,7 @@ module Authorizme
         belongs_to :role, :class_name => "Authorizme::UserRole", :foreign_key => "user_role_id"
         belongs_to :origin_provider, :class_name => "Authorizme::UserProvider"
         has_many :providers, :class_name => "Authorizme::UserProvider"
+        has_many :synchronize_requests, :class_name => "Authorizme::SynchronizeRequest"
         
         attr_reader :password
         attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation
@@ -27,6 +28,8 @@ module Authorizme
 
         # Filters
         before_create :set_default_role
+
+        scope :with_role, joins(:role)
 
         include InstanceMethodsOnActivation
 
@@ -43,14 +46,6 @@ module Authorizme
             super
           end
         end
-
-        #def respond_to?(meth)
-        #  if meth.to_s =~ /^authenticate_with_.*$/
-        #    true
-        #  else
-        #    super
-        #  end
-        #end
         
         protected
 
@@ -117,12 +112,30 @@ module Authorizme
       def has_not_provider?
         !self.has_provider
       end
+
+      def has_synchronize_request?
+        self.synchronize_requests.status_new.any?
+      end
+      
+      def synchronize other_user
+        other_user.providers.each do |other_provider|
+          other_provider.update_attributes({user: self})
+        end
+        on_synchronized other_user
+      end
+
+      def to_s
+        "#{self.first_name} #{self.last_name}"
+      end
       
       private
-
+      
+        def on_synchronize old_user
+        end
+        
         def set_default_role
-         new_role = Authorizme::UserRole.find(:first) 
-         self.role = new_role if new_role
+          new_role = Authorizme::UserRole.find(:first) 
+          self.role = new_role if new_role
         end
     end
   end

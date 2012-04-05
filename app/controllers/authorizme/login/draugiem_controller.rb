@@ -14,9 +14,9 @@ module Authorizme
           attributes = {first_name: user_json["name"], last_name: user_json["surname"], image_url: user_json["img"]}
           user = User.authenticate_with_draugiem(json["uid"], attributes, json["apikey"]) 
           login user
-          respond_with_status "logged_in", user: user
+          render_popup_view
         else
-          respond_with_status "error_in_loggin"
+          render_popup_view
         end
       end
 

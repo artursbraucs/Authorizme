@@ -1,4 +1,29 @@
-## 0.0.1 2012-03-13
+## 0.0.4
+
+### Features & Enhancements
+
+* Add synchronize requests table and methods to user for synchronize requests
+* Remove on_user_already_exist method from controller
+
+## 0.0.3
+
+### Features & Enhancements
+
+* [#1][]: Add role methods to controller ([@artursbraucs][])
+* Add providers callback popup view with jquery support.
+
+## 0.0.2
+
+### Features & Enhancements
+
+* Add synchronize to user with another provider
+* Add synchronize request method which you can override in your controller
+
+### Bug Fixes
+
+* Login with facebook and draugiem in development mode problem
+
+## 0.0.1
 
 * Initial release
 

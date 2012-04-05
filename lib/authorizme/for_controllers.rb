@@ -16,17 +16,46 @@ module Authorizme
       @current_user ||= User.find session[:user_id] if session[:user_id]
     end
     
-    def require_user
+    def login user
+      if current_user
+        SynchronizeRequest.create!({user: current_user, requested_user: user})
+      else
+    	  session[:user_id] = user.id
+    	end
+    end
+    
+    def run_require_user
       unless current_user
-        if Authorizme::remote
-          status = {status: "not_logged_in"}
-          respond_with status
-        else
-          redirect_to "/#{Authorizme::namespace}/"
-        end
+        not_logged_in_status
       end
     end
     
+    def method_missing(meth, *args, &block)
+      if meth.to_s =~ /^require_(.+)$/
+        if $1 == "user"
+          run_require_user
+        else
+          run_require_role($1, *args, &block)
+        end
+      else
+        super
+      end
+    end
+    
+    def run_require_role(role, *args, &block)
+      unless current_user && current_user.role.name == role
+        not_logged_in_status
+      end
+    end
+    
+    def not_logged_in_status
+      if Authorizme::remote
+        status = {status: "not_logged_in"}
+        respond_with status
+      else
+        redirect_to "/#{Authorizme::namespace}/"
+      end
+    end
   end
 end
 

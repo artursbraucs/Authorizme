@@ -1,6 +1,22 @@
 <h2>Authorizme plugin for authorization</h2>
 <div>Authorizme version <%= Authorizme::VERSION %></div>
 
+<% if @user %>
+<h3>Current user <%= @user %></h3>
+  
+<% if @user.has_synchronize_request? %>
+  <b>Synchronize Requests</b>
+  <% @user.synchronize_requests.each do |sync_request| %>
+    <div>User: <%= sync_request.requested_user %></div>
+  <% end %>
+<% end %>
+
+<div><a href="<%= "/#{Authorizme::namespace}/logout" %>">Logout</a></div>
+
+<% end %> 
+
+
+
 <h3>Authorize with your credentials:</h3>
 <%= form_tag "/#{Authorizme::namespace}/sessions" do %>
   <p>
