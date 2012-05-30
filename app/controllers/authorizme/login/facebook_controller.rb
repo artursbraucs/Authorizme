@@ -13,6 +13,12 @@ module Authorizme
         user_json = client.selection.me.info!
         image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large"
         attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url}
+        if user_json.email
+          user = User.find_by_email(user_json.email)
+          unless user
+            attributes[:email] = user_json.email
+          end
+        end
         user = User.authenticate_with_facebook(user_json.id, attributes, access_token) 
         login user
         render_popup_view

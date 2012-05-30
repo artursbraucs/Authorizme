@@ -1,3 +1,9 @@
+## 0.0.7
+
+### Features & Enhancements
+
+* Get user email from facebook
+
 ## 0.0.6
 
 ### Features & Enhancements
