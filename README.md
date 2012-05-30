@@ -48,6 +48,8 @@ Also you can set roles. Just add some roles in Role model and then set it to use
 
 You can sync your accounts. If user login with another provider on existing user session, then plugin will set synchronize request. You can call `has_synchronize_request?` and check if there's any new request. Then you can call 'synchronize(user)' to user model. 
 
+Also you can use synchronize without requests (synchronous synchronize). Just add get param `synchronize=true` in login url (e.c. /authorizme/login/twitter?synchronize=true).
+
 #### Custom provider callback view
 
 By default providers use callback view which require JQuery and require `eventBus` in `window` dom element:

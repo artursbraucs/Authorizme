@@ -2,12 +2,19 @@ module Authorizme
   class AuthorizmeController < ::ApplicationController
     respond_to :html, :json, :xml
     layout "authorizme/layouts/popup"
+    before_filter :check_synchronize, :only => [:auth]
 
     def index
       @user = current_user
     end
 
     protected
+
+      def check_synchronize
+        if params[:synchronize]
+          session[:synchronize] = true
+        end
+      end
       
       def logout
       	session[:user_id] = nil

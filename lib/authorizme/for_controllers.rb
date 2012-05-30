@@ -17,8 +17,14 @@ module Authorizme
     end
     
     def login user
-      if current_user
-        SynchronizeRequest.create!({user: current_user, requested_user: user})
+      if current_user && current_user.id != user.id
+        if session[:synchronize]
+          SynchronizeRequest.create!({user: current_user, requested_user: user, status: "accepted"})
+          current_user.synchronize user
+          session[:synchronize] = nil
+        else
+          SynchronizeRequest.create!({user: current_user, requested_user: user})
+        end
       else
     	  session[:user_id] = user.id
     	end

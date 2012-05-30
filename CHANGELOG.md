@@ -1,3 +1,19 @@
+## 0.0.6
+
+### Features & Enhancements
+
+* Synchronize without SynchronizeRequest
+
+### Bug Fixes
+
+* Fix error with stack level too deep when synchronize 2 equal users
+
+## 0.0.5
+
+### Bug Fixes
+
+* Errors on synchronize
+
 ## 0.0.4
 
 ### Features & Enhancements
