@@ -32,7 +32,7 @@ module Authorizme
       def respond_with_status status_name, attributes = nil
         status = {status: status_name}
         status = status.merge(attributes) if attributes
-        respond_with status
+        respond_with status, :location => nil
       end
       
       def redirect_uri provider

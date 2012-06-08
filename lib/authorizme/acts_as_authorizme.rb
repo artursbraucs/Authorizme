@@ -94,7 +94,7 @@ module Authorizme
     module InstanceMethodsOnActivation
       # Returns self if the password is correct, otherwise false.
       def authenticate(unencrypted_password)
-        if BCrypt::Password.new(password_digest) == unencrypted_password
+        if password_digest && BCrypt::Password.new(password_digest) == unencrypted_password
           self
         else
           false

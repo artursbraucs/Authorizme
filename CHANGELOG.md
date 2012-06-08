@@ -1,3 +1,10 @@
+## 0.0.8
+
+### Bug Fixes
+
+* BCrypt hash error when password digest is blank
+* Respond with json error. Set Location => nil
+
 ## 0.0.7
 
 ### Features & Enhancements

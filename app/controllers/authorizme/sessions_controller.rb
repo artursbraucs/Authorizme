@@ -12,8 +12,8 @@ module Authorizme
         end
       else
         if Authorizme::remote
-          status = {status: "error"}
-          respond_with status
+          status = {status: "authorization_faild"}
+          respond_with(status, {:location => nil, :status => :not_found})
         else
           render "new"
         end
