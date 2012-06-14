@@ -127,6 +127,9 @@ module Authorizme
       def to_s
         "#{self.first_name} #{self.last_name}"
       end
+
+      def on_logged_in
+      end
       
       private
       

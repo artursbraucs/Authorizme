@@ -28,6 +28,7 @@ module Authorizme
       else
     	  session[:user_id] = user.id
     	end
+      user.on_logged_in
     end
     
     def run_require_user

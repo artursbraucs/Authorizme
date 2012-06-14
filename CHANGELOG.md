@@ -1,3 +1,9 @@
+## 0.0.9
+
+### Features & Enhancements
+
+* User logged in callback method
+
 ## 0.0.8
 
 ### Bug Fixes
