@@ -1,3 +1,10 @@
+## 0.0.10
+
+### Features & Enhancements
+
+* Facebook libary
+* Canvas authorization option for facebook
+
 ## 0.0.9
 
 ### Features & Enhancements

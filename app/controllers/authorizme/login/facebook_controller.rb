@@ -9,15 +9,15 @@ module Authorizme
       end
 
       def callback
-        access_token = client.authorization.process_callback(params[:code], :redirect_uri => redirect_uri("facebook"))
-        authorize_user client, access_token
+        @facebook = Authorizme::Provider::Facebook.new(code: params[:code], redirect_uri: redirect_uri("facebook"))
+        authorize_user @facebook.get_client, @facebook.get_access_token
         render_popup_view
       end
 
       def canvas
         @facebook = Authorizme::Provider::Facebook.new(signed_request: params[:signed_request])
         user = authorize_user @facebook.get_client, @facebook.get_access_token
-        respond_with user, :location => nil
+        redirect_to Authorizme::after_login_path
       end
       
       private

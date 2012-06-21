@@ -34,9 +34,13 @@ module Authorizme
       end
 
       def get_facebook_user
-        user_json = @client.selection.me.info!
+        user_json = get_facebook_user_json
         image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large"
         attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url, email: user_json.email}
+      end
+
+      def get_facebook_user_json
+        @user_json ||= @client.selection.me.info!
       end
 
       private
