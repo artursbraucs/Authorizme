@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       get "/login/#{provider}" => "login/#{provider}#auth", :as => "#{provider}_login"
       get "/login/#{provider}/callback" => "login/#{provider}#callback", :as => "#{provider}_callback"
     end
+
+    post "/login/facebook/canvas" => "login/facebook#canvas", :as => "facebook_canvas"
     
     post '/login' => 'sessions#create', :as => 'login'
     get '/logout' => 'sessions#destroy', :as => 'logout'
