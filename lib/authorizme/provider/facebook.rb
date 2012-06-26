@@ -7,22 +7,8 @@ module Authorizme
       attr_accessor :options
 
       def initialize(options={})
-        @options = {client_id: Authorizme::facebook_client_id, secret_id: Authorizme::facebook_client_secret}.merge(options)
-        set_client
-      end
-
-      def set_client
-        options = {client_id: Authorizme::facebook_client_id, secret_id: Authorizme::facebook_client_secret}
-        @client ||= FBGraph::Client.new(options)
-        @access_token = nil
-        if @options[:code] && @options[:redirect_uri]
-          @access_token = @client.authorization.process_callback(@options[:code], :redirect_uri => @options[:redirect_uri])
-        elsif @options[:signed_request]
-          data = FBGraph::Canvas.parse_signed_request(@options[:secret_id], @options[:signed_request])
-          @access_token = data["oauth_token"]
-          @client.set_token @access_token
-        end
-        @client     
+        @options = options
+        init_client
       end
 
       def get_client
@@ -33,17 +19,57 @@ module Authorizme
         @access_token
       end
 
-      def get_facebook_user
-        user_json = get_facebook_user_json
+      def get_user_json
+        @user_json ||= @client.selection.me.info!
+      end
+
+      def get_user
+        user_json = get_user_json
         image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large"
         attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url, email: user_json.email}
       end
 
-      def get_facebook_user_json
-        @user_json ||= @client.selection.me.info!
+      def get_signed_request_data
+        if @signed_request_data 
+          return @signed_request_data
+        else
+          return nil
+        end
+      end
+
+      def authorize_with_code code, redirect_uri
+        @access_token = @client.authorization.process_callback(code, :redirect_uri => redirect_uri)
+        return @access_token != nil
+      end
+
+      def authorize_with_signed_request signed_request
+        @signed_request_data = FBGraph::Canvas.parse_signed_request(@options[:client_secret], signed_request)
+        @access_token = @signed_request_data["oauth_token"] if @signed_request_data["oauth_token"]
+        @client.set_token @access_token if @client
+        return @access_token != nil
+      end
+
+      def get_popup_authorize_url callback_url, scope
+        @client.authorization.authorize_url(:redirect_uri => callback_url, 
+                                                      :scope => scope, 
+                                                      :display => "popup")
+      end
+
+      def get_dialog_authorize_url callback_url, scope
+        "https://www.facebook.com/dialog/oauth/?client_id=#{@options[:client_id]}&redirect_uri=#{CGI.escape(callback_url)}&scope=#{scope}"
       end
 
       private
+
+        def init_client
+          @client = nil
+          @access_token = nil
+          if @options[:client_id] && @options[:client_secret]
+            options = {client_id: @options[:client_id], secret_id: @options[:client_secret]}
+            @client = FBGraph::Client.new(options)
+          end
+          @client     
+        end
 
     end
   end

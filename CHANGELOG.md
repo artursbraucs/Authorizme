@@ -1,3 +1,10 @@
+## 0.0.11
+
+### Features & Enhancements
+
+* Facebook provider update
+* Refacturing
+
 ## 0.0.10
 
 ### Features & Enhancements

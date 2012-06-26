@@ -1,44 +1,47 @@
 module Authorizme
   module Login
     class FacebookController < AuthorizmeController
-      
+      before_filter :set_facebook, :only => [:auth, :callback, :canvas]
+
       def auth
-        redirect_to client.authorization.authorize_url(:redirect_uri => redirect_uri("facebook"), 
-                                                      :scope => Authorizme::facebook_perms, 
-                                                      :display => "popup")
+        callback_url = params[:callback_url] || redirect_uri("facebook")
+        if params[:canvas]
+          @authorize_url = @facebook.get_dialog_authorize_url callback_url, Authorizme::facebook_perms
+        else
+          redirect_to @facebook.get_popup_authorize_url callback_url, Authorizme::facebook_perms
+        end
       end
 
       def callback
-        @facebook = Authorizme::Provider::Facebook.new(code: params[:code], redirect_uri: redirect_uri("facebook"))
-        authorize_user @facebook.get_client, @facebook.get_access_token
-        render_popup_view
-      end
-
-      def canvas
-        @facebook = Authorizme::Provider::Facebook.new(signed_request: params[:signed_request])
-        user = authorize_user @facebook.get_client, @facebook.get_access_token
-        redirect_to Authorizme::after_login_path
+        if params[:signed_request]
+          @facebook.authorize_with_signed_request params[:signed_request]
+          authorize_user @facebook
+          redirect_to Authorizme::after_login_path
+        elsif params[:code]
+          @facebook.authorize_with_code params[:code], redirect_uri("facebook")
+          authorize_user @facebook
+          render_popup_view
+        else
+          redirect_to Authorizme::after_login_path
+        end
       end
       
       private
-      
-        def client token = nil
-          options = {client_id: Authorizme::facebook_client_id, secret_id: Authorizme::facebook_client_secret}
-          options[:token] =  token if token
-          @client ||= FBGraph::Client.new(options)
+
+        def set_facebook
+          options = {client_id: Authorizme::facebook_client_id, client_secret: Authorizme::facebook_client_secret}
+          @facebook = Authorizme::Provider::Facebook.new(options)
         end
 
-        def authorize_user client, access_token
-          user_json = client.selection.me.info!
-          image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large"
-          attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url}
-          if user_json.email
-            user = User.find_by_email(user_json.email)
-            unless user
-              attributes[:email] = user_json.email
+        def authorize_user facebook
+          fb_user = facebook.get_user
+          if fb_user[:email]
+            user = User.find_by_email(fb_user[:email])
+            if user
+              fb_user.delete(:email)
             end
           end
-          user = User.authenticate_with_facebook(user_json.id, attributes, access_token) 
+          user = User.authenticate_with_facebook(facebook.get_user_json.id, fb_user, facebook.get_access_token) 
           login user
           user
         end

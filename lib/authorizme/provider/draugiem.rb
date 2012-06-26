@@ -19,8 +19,6 @@ module Authorizme
       end
 
       def login_url
-        puts "App key: #{@options[:draugiem_app_key]}"
-        puts "Redirect url: #{@options[:redirect_url]}"
         hash = Digest::MD5.hexdigest(@options[:draugiem_app_key] + @options[:redirect_url])
         "#{@options[:draugiem_api_authorize_path]}?app=#{@options[:draugiem_app_id]}&hash=#{hash}&redirect=#{@options[:redirect_url]}"
       end
