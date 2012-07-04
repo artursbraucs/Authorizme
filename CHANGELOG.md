@@ -1,3 +1,10 @@
+## 1.0.0
+
+### Features & Enhancements
+
+* Publish first stable version after few month using in some medium apps
+* Update facebook provider
+
 ## 0.0.11
 
 ### Features & Enhancements

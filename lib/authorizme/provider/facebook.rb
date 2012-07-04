@@ -20,13 +20,18 @@ module Authorizme
       end
 
       def get_user_json
-        @user_json ||= @client.selection.me.info!
+        @user_json ||= @client.selection.me.info! if @access_token
       end
 
       def get_user
         user_json = get_user_json
-        image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large"
-        attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url, email: user_json.email}
+        if user_json
+          image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large" 
+          attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url, email: user_json.email}
+          return attributes
+        else
+          return nil
+        end
       end
 
       def get_signed_request_data

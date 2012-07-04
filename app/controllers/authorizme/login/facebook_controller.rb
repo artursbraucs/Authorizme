@@ -4,7 +4,7 @@ module Authorizme
       before_filter :set_facebook, :only => [:auth, :callback, :canvas]
 
       def auth
-        callback_url = params[:callback_url] || redirect_uri("facebook")
+        callback_url = params[:callback_url] || redirect_uri("facebook")        
         if params[:canvas]
           @authorize_url = @facebook.get_dialog_authorize_url callback_url, Authorizme::facebook_perms
         else
