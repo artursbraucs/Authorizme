@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace Authorizme::namespace do
   	resources :sessions
     resources :users
+    resources :password_resets
     
     get '/' => 'authorizme#index', :as => 'main'
     get '/signup' => 'users#new', :as => 'signup' 

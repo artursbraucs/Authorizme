@@ -14,6 +14,10 @@ class CreateUsers < ActiveRecord::Migration
 
       # For password
       t.string :password_digest
+      
+      # For reseting password
+      t.string :password_reset_token
+      t.datetime :password_reset_sent_at
 
       # Extending with your own data for user
       # here

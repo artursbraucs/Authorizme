@@ -131,8 +131,24 @@ module Authorizme
       def on_logged_in
       end
       
-      private
+      def send_password_reset
+        set_new_password_reset_token
+        self.password_reset_sent_at = Time.zone.now
+        save!
+        send_password_reset_notification
+      end
       
+      def set_new_password_reset_token
+        begin
+          self.password_reset_token = SecureRandom.urlsafe_base64
+        end while User.exists?(:password_reset_token => self.password_reset_token)
+      end
+      
+      private
+        
+        def send_password_reset_notification
+        end
+        
         def on_synchronized old_user
         end
         
