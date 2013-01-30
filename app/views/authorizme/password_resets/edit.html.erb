@@ -1,6 +1,6 @@
 <h1>Reset Password</h1>
 
-<%= form_for @user, :url => authorizme_password_resets_path(params[:id]) do |f| %>
+<%= form_for @user, :url => "/#{Authorizme::namespace}/password_resets/#{params[:id]}" do |f| %>
   <% if @user.errors.any? %>
     <div class="error_messages">
       <h2>Form is invalid</h2>
