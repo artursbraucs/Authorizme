@@ -11,9 +11,11 @@
   <% end %>
 <% end %>
 
-<div><a href="<%= "/#{Authorizme::namespace}/logout" %>">Logout</a></div>
+<div>
+	<%= link_to "logout", "/#{Authorizme::namespace}/logout", :method => :delete %>
+</div>
 
-<% end %> 
+<% end %>
 
 
 
@@ -29,6 +31,8 @@
   </p>
   <p class="button"><%= submit_tag "Log in" %></p>
 <% end %>
+
+<%= link_to "Forget your password?", "/#{Authorizme::namespace}/password_resets/new" %>
 
 <h3>or use one of those providers:</h3>
 <%= link_to "Draugiem.lv", "/#{Authorizme::namespace}/login/draugiem" %>

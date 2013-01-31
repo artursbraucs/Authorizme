@@ -17,12 +17,8 @@ module Authorizme
       end
       
       def logout
-      	session[:user_id] = nil
-        if Authorizme::remote
-          respond_with_status "logged_out"
-        else
-          redirect_to Authorizme::after_logout_path
-        end
+      	session[:user_id] = nil if session[:user_id] && session[:user_id] != nil
+      	respond_with({status: "logged_out"}, :location => Authorizme::after_logout_path)
       end
       
       def render_popup_view

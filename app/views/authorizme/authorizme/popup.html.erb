@@ -1,7 +1,9 @@
 <script type="text/javascript">
   $(document).ready(function() {
     window.close();
-    window.opener.eventBus.trigger("loginDone");
+	if (window.opener.eventBus) {
+    	window.opener.eventBus.trigger("loginDone");
+    }
     window.opener.focus();
   });
 </script>
