@@ -1,20 +1,26 @@
-<h1>Reset Password</h1>
-
 <%= form_for @user, :url => "/#{Authorizme::namespace}/password_resets/#{params[:id]}" do |f| %>
-  <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @user.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+  <% if @user.errors.any? && @user.errors.get(:password) %>
+  <div class="error_messages">
+    <ul>
+	  <% @user.errors.get(:password).each do |error| %>
+		<li><%= error %></li>
+	  <% end %> 
+ 	</ul>
+  </div>
   <% end %>
   <div class="field">
     <%= f.label :password %>
     <%= f.password_field :password %>
   </div>
+  <% if @user.errors.any? && @user.errors.get(:password_confirmation) %>
+  <div class="error_messages">
+    <ul>
+	  <% @user.errors.get(:password_confirmation).each do |error| %>
+		<li><%= error %></li>
+	  <% end %> 
+ 	</ul>
+  </div>
+  <% end %>
   <div class="field">
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
