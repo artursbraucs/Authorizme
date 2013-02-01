@@ -1,0 +1,13 @@
+/*
+ *= require_self
+ *= require reset
+ *= require authorizme/main
+ *= require authorizme/form
+ *= require authorizme/button
+ *= require authorizme/popup
+ */
+
+body
+{
+  font-family: Arial, sans-serif;
+}
