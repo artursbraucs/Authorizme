@@ -5,18 +5,9 @@ module Authorizme
       user = User.find_by_email(params[:email])
       if user && user.authenticate(params[:password])
         login user
-        if Authorizme::remote
-          respond_with_status "logged_in", {user: user}
-        else
-          redirect_to Authorizme::after_login_path
-        end
+        respond_with({status: "logged_in", user: user}, :location => Authorizme::after_login_path)
       else
-        if Authorizme::remote
-          status = {status: "authorization_faild"}
-          respond_with(status, {:location => nil, :status => :not_found})
-        else
-          render "new"
-        end
+        respond_with({status: "authorization_faild", user: user}, {:location => Authorizme::not_logged_in_path, :status => :not_found})
       end
     end
     
