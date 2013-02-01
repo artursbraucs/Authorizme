@@ -59,16 +59,20 @@ form
 
   .error_messages
   {
+    margin: 0;
+
     ul
     {
       list-style: none;
+      background: #ccc;
+      margin: 0;
 
       li
       {
         display: block;
         color: #D60000;
         font-size: 11px;
-        text-align: center;
+        background: #eee;
       }
     }
   }
