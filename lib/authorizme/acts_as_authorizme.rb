@@ -22,6 +22,7 @@ module Authorizme
         
         # Validations
         validates_confirmation_of :password
+        validates_length_of :password, :minimum => 3
         validates_presence_of     :password_digest, :if => :has_not_provider?
         validates_presence_of :email, :on => :create, :if => :has_not_provider?
         validates_uniqueness_of :email, :if => :has_not_provider?
