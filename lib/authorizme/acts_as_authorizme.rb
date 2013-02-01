@@ -17,12 +17,12 @@ module Authorizme
         has_many :providers, :class_name => "Authorizme::UserProvider"
         has_many :synchronize_requests, :class_name => "Authorizme::SynchronizeRequest"
         
-        attr_reader :password
+        attr_reader :password, :password_will_be_update
         attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation
         
         # Validations
         validates_confirmation_of :password
-        validates_length_of :password, :minimum => 3
+        validates_length_of :password, :minimum => 3, :if => :need_check_password?
         validates_presence_of     :password_digest, :if => :has_not_provider?
         validates_presence_of :email, :on => :create, :if => :has_not_provider?
         validates_uniqueness_of :email, :if => :has_not_provider?
@@ -112,6 +112,10 @@ module Authorizme
       
       def has_not_provider?
         !self.has_provider
+      end
+      
+      def need_check_password?
+        self.password_will_be_update
       end
 
       def has_synchronize_request?

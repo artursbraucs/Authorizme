@@ -19,6 +19,7 @@ module Authorizme
 
     def update
       @user = User.find_by_password_reset_token!(params[:id])
+      @user.password_will_be_update = true
       if @user.password_reset_sent_at < 2.hours.ago
         respond_with @user, :location => root_url, :alert => "Password reset has expired." 
       elsif @user.update_attributes(params[:user])
