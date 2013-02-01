@@ -16,6 +16,7 @@ form
       display: block;
       width: 100%;
       padding: 8px;
+      margin: 8px 0;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
@@ -45,6 +46,7 @@ form
       input
       {
         border: 1px solid #D60000;
+        margin: 4px 0 8px;
 
         &:focus
         {
