@@ -3,8 +3,8 @@
     <div class="shade_wrap"></div>
     <div class="container_wrap">
 
-      <h2>Password reset</h2>
-      <p>Please, enter your new password</p>
+      <h2><%= t("authorizme.password_reset.new_password_form.title") %></h2>
+      <p><%= t("authorizme.password_reset.new_password_form.description") %></p>
 
       <%= form_for @user, :url => "/#{Authorizme::namespace}/password_resets/#{params[:id]}" do |f| %>
 
@@ -40,7 +40,7 @@
 
         <div class="actions">
           <div class="button_wrap center green">
-            <%= f.submit "Update Password" %>
+            <%= f.submit t("authorizme.password_reset.new_password_form.submit") %>
           </div>
         </div>
       <% end %>

@@ -19,6 +19,7 @@ module Authorizme
         
         attr_reader :password
         attr_accessor :password_will_be_update
+        
         attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation
         
         # Validations

@@ -1,0 +1,7 @@
+en:
+  authorizme:
+    password_reset:
+      new_password_form: 
+        title: Password reset
+        description: Please, enter your new password
+        submit: Update Password
