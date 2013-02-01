@@ -17,7 +17,8 @@ module Authorizme
         has_many :providers, :class_name => "Authorizme::UserProvider"
         has_many :synchronize_requests, :class_name => "Authorizme::SynchronizeRequest"
         
-        attr_reader :password, :password_will_be_update
+        attr_reader :password
+        attr_accessor :password_will_be_update
         attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation
         
         # Validations
