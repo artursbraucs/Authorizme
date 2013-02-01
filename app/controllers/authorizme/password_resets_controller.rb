@@ -23,6 +23,7 @@ module Authorizme
       if @user.password_reset_sent_at < 2.hours.ago
         respond_with @user, :location => root_url, :alert => "Password reset has expired." 
       elsif @user.update_attributes(params[:user])
+        login @user
         respond_with @user, :location => root_url, :notice => "Password has been reset!"
       else
         render :edit
