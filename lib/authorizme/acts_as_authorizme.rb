@@ -119,6 +119,10 @@ module Authorizme
       def need_check_password?
         self.password_will_be_update
       end
+      
+      def password_will_be_update_in_this_request
+        self.password_will_be_update = true
+      end
 
       def has_synchronize_request?
         self.synchronize_requests.status_new.any?
