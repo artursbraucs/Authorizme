@@ -1,3 +1,9 @@
+## 1.1.0
+
+### Features & Enhancements
+
+* Password reset feature with send email callback to app
+
 ## 1.0.0
 
 ### Features & Enhancements
