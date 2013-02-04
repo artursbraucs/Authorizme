@@ -20,12 +20,12 @@ module Authorizme
         attr_reader :password
         attr_accessor :password_will_be_update
         
-        attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation
+        attr_accessible :first_name, :last_name, :image_url, :email, :password, :password_confirmation, :password_will_be_update
         
         # Validations
         validates_confirmation_of :password
         validates_length_of :password, :minimum => 3, :if => :need_check_password?
-        validates_presence_of     :password_digest, :if => :has_not_provider?
+        validates_presence_of :password_digest, :if => :has_not_provider?
         validates_presence_of :email, :on => :create, :if => :has_not_provider?
         validates_uniqueness_of :email, :if => :has_not_provider?
 
