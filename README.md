@@ -58,7 +58,9 @@ By default providers use callback view which require JQuery and require `eventBu
 <script type="text/javascript">
   $(document).ready(function() {
     window.close();
-    window.opener.eventBus.trigger("loginDone");
+	if (window.opener.eventBus) {
+    	window.opener.eventBus.trigger("loginDone");
+	}
     window.opener.focus();
   });
 </script>
@@ -72,6 +74,10 @@ You can implement your own provider:
 1. Create controller under model `Authorizme::Login` and extend `AuthorizmeController`. 
 2. You must implement `auth` and `callback` methods, where `auth` is method which redirect user to provider and `callback` get data from provider callback data. 
 3. Then you must add your provider namespace in authorizme config file in array `providers`. 
+
+#### Password reset
+
+Use `/authorizme/password_resets` (if you have another namespace, use `/{your_namespace}/password_resets`) controller to create a password reset token and send it to user. You can overide `send_password_reset_notification` method in user model to send an email with `password_reset_token` . The password reset token will expire after 2 hours.
 
 ## Development
 
