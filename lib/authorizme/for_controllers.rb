@@ -56,12 +56,8 @@ module Authorizme
     end
     
     def not_logged_in_status
-      if Authorizme::remote
-        status = {status: "not_logged_in"}
-        respond_with status
-      else
-        redirect_to "/#{Authorizme::namespace}/"
-      end
+      status = {status: "not_logged_in"}
+      respond_with status, :location => "/#{Authorizme::namespace}/"
     end
   end
 end

@@ -61,9 +61,6 @@ module Authorizme
   
   mattr_accessor :not_logged_in_path
   @@not_logged_in_path = "/#{Authorizme::namespace}/"
-
-  mattr_accessor :remote
-  @@remote = false
   
   mattr_accessor :providers
   @@providers = ["draugiem", "facebook", "twitter"]

@@ -7,6 +7,7 @@ module Authorizme
     
     def create
       @user = User.new(params[:user])
+      @user.password_will_be_update_in_this_request if @user
       if @user.save
         redirect_to root_url, :notice => "Signed up!"
       else

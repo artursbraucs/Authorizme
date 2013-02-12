@@ -3,6 +3,9 @@
 ### Features & Enhancements
 
 * Password reset feature with send email callback to app
+* Remove remote attribute. Use respond_with and location param.
+* Bug fixed
+* Refacturing
 
 ## 1.0.0
 
