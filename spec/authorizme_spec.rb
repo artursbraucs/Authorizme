@@ -11,7 +11,7 @@ describe Authorizme do
     end
 
     it "get default from configs" do
-      Authorizme.remote.should == false
+      Authorizme.draugiem_api_path.should == "http://api.draugiem.lv/json/"
     end
   end  
 end
