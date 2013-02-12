@@ -2,6 +2,6 @@ lv:
   authorizme:
     password_reset:
       new_password_form: 
-        title: Password reset
-        description: Please, enter your new password
-        submit: Update Password
+        title: "Ievadi jaunu paroli!"
+        description: "Izvēles sev jaunu paroli - un centies to kārtīgi iegaumēt ;)"
+        submit: "Nomainīt paroli!"

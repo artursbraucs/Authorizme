@@ -1,0 +1,7 @@
+et:
+  authorizme:
+    password_reset:
+      new_password_form: 
+        title: "Parooli uuendamine"
+        description: "Palun, sisesta uus parool"
+        submit: "Uuenda Salasõna"
