@@ -1,8 +1,8 @@
 module Authorizme
   class SessionsController < AuthorizmeController
-  
+    
     def create
-      user = User.find_by_email(params[:email])
+      user = User.find(:first, :conditions => [ "lower(email) = ?", params[:email].downcase ])
       if user && user.authenticate(params[:password])
         login user
         respond_with({status: "logged_in", user: user}, :location => Authorizme::after_login_path)

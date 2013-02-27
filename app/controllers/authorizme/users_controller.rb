@@ -14,5 +14,12 @@ module Authorizme
         render "new"
       end
     end
+    
+    def find_registred_email
+      user = User.find(:first, :conditions => [ "lower(email) = ?", params[:email].downcase ])
+      provider = user && user.origin_provider ? user.origin_provider.provider_type : false
+      respond_with({ email: params[:email], registred: user.present?, provider: provider}, {location: nil})
+    end
+    
   end
 end

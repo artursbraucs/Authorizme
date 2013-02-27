@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   # All authorizme routes will be under custom namespace
   namespace Authorizme::namespace do
   	resources :sessions
-    resources :users
+    resources :users do
+      collection do
+        get "find_registred_email"
+      end
+    end
     resources :password_resets
     
     get '/' => 'authorizme#index', :as => 'main'

@@ -33,5 +33,6 @@ Gem::Specification.new do |s|
   s.add_dependency "twitter"
   s.add_dependency "oauth2"
   s.add_dependency "fbgraph"
+  s.add_dependency "fb_graph"
   
 end
