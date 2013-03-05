@@ -29,7 +29,7 @@ module Authorizme
       private
 
         def set_facebook
-          options = {client_id: Authorizme::facebook_client_id, client_secret: Authorizme::facebook_client_secret}
+          options = {client_id: Authorizme::facebook_client_id, client_secret: Authorizme::facebook_client_secret, image_size: Authorizme::facebook_image_size}
           @facebook = Authorizme::Provider::Facebook.new(options)
         end
 

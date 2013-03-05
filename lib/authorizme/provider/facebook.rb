@@ -26,7 +26,13 @@ module Authorizme
       def get_user
         user_json = get_user_json
         if user_json
-          image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large" 
+          if @options[:image_size]
+            width = @options[:image_size][:width]
+            height = @options[:image_size][:height]
+            image_url = "https://graph.facebook.com/#{user_json.id}/picture?width=#{width}&height=#{height}" 
+          else
+            image_url = "https://graph.facebook.com/#{user_json.id}/picture?type=large" 
+          end
           attributes = {first_name: user_json.first_name, last_name: user_json.last_name, image_url: image_url, email: user_json.email}
           return attributes
         else

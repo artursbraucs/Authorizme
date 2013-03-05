@@ -42,6 +42,9 @@ module Authorizme
 
   mattr_accessor :facebook_perms
   @@facebook_perms = "email,read_stream,offline_access"
+  
+  mattr_accessor :facebook_image_size
+  @@facebook_image_size = {width: 200, height: 200}
 
   # Atributes for twitter.com API
   mattr_accessor :twitter_consumer_key

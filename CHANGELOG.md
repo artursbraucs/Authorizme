@@ -1,8 +1,12 @@
-## 1.1.1
+## 1.1.2
 
 ### Features & Enhancements
 
-* Bug fixes
+* Add facebook_image_size support
+
+## 1.1.1
+
+### Bug Fixes
 
 ## 1.1.0
 
