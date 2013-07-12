@@ -1,3 +1,9 @@
+## 1.2.0
+
+### Features & Enhancements
+
+* Supports Rails 4.0
+
 ## 1.1.2
 
 ### Features & Enhancements
