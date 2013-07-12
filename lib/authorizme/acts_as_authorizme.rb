@@ -8,7 +8,7 @@ module Authorizme
     module ClassMethods
       def acts_as_authorizme
         # Load bcrypt-ruby only when acts_as_authorizme is called. Need for password digest
-        gem 'bcrypt-ruby', '~> 3.0.0'
+        gem 'bcrypt-ruby'
         require 'bcrypt'
         
         # Relations
@@ -32,7 +32,7 @@ module Authorizme
         # Filters
         before_create :set_default_role
 
-        scope :with_role, joins(:role)
+        scope :with_role, -> { joins(:role) }
 
         include InstanceMethodsOnActivation
 

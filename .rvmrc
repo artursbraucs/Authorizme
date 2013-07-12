@@ -1,1 +1,1 @@
-rvm 1.9.3@authorizme --verbose --create
+rvm 2.0.0@authorizme --verbose --create
